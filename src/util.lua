@@ -9,14 +9,24 @@ Icons.Icon = SMODS.GameObject:extend {
         if not self.key then sendErrorMessage("Missing key!","ICONS") return end
         self.atlas = self.atlas or 'Joker'
         self.pos = self.pos or {x = 0, y = 0}
-        self.targets = self.targets or {self.key}
-    
+        self.targets = {['en-us'] = { {values = {self.key}}}}
+        for _, v in pairs(self.targets) do
+            for _, vv in ipairs(v) do
+                vv.values = vv.values or {self.key}
+                vv.apply = vv.apply or function (comp, str)
+                    return comp == str
+                end
+                print(vv)
+            end
+        end
+
         Icons.Icons[SMODS.current_mod.prefix..'_'..self.key] = {
             key = SMODS.current_mod.prefix..'_'..self.key,
             original_key = self.key,
             atlas = self.atlas,
             pos = self.pos,
-            targets = self.targets
+            targets = self.targets,
+            awoo = true
         }
         sendDebugMessage(("Icon %s has been registered"):format(self.key),"ICONS")
     end
@@ -63,13 +73,17 @@ function Icons.get_element_count(t)
 end
 
 function Icons.get_icon_data(str)
-    for i, v in pairs(Icons.Icons) do
-        for ii,vv in ipairs(v.targets) do
-            if str == vv then
-                return {
-                    atlas = v.atlas,
-                    pos = v.pos
-                }
+    for _, icon in pairs(Icons.Icons) do
+        local lang = G.SETTINGS.language
+        lang = icon.targets[lang] and lang or 'en-us'
+        for _, v in ipairs(icon.targets[lang]) do
+            for _, vv in ipairs(v.values) do
+                if (str == vv) then
+                    return {
+                        atlas = icon.atlas,
+                        pos = icon.pos
+                    }
+                end
             end
         end
     end

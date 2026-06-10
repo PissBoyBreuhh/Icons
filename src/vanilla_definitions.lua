@@ -10,130 +10,260 @@ Icons.Icon{
     key = 'spades',
     atlas = 'icons',
     pos = {x = 0, y = 0},
-    targets = {"Spade", "Spades"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Spade", "Spades"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'hearts',
     atlas = 'icons',
     pos = {x = 1, y = 0},
-    targets = {"Heart", "Hearts"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Heart", "Hearts"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'clubs',
     atlas = 'icons',
     pos = {x = 2, y = 0},
-    targets = {"Club", "Clubs"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Club", "Clubs"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'diamonds',
     atlas = 'icons',
     pos = {x = 3, y = 0},
-    targets = {"Diamond", "Diamonds"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Diamond", "Diamonds"},
+            }
+        }
+    },
 }
 
 Icons.Icon{
     key = 'ace',
     atlas = 'icons',
     pos = {x = 0, y = 1},
-    targets = {"Ace", "Aces"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Ace", "Aces"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'king',
     atlas = 'icons',
     pos = {x = 1, y = 1},
-    targets = {"King", "Kings"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"King", "Kings"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'queen',
     atlas = 'icons',
     pos = {x = 2, y = 1},
-    targets = {"Queen", "Queens"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Queen", "Queens"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'jack',
     atlas = 'icons',
     pos = {x = 3, y = 1},
-    targets = {"Jack", "Jacks"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Jack", "Jacks"},
+            }
+        }
+    },
 }
 
 Icons.Icon{
     key = 'consumable',
     atlas = 'icons',
     pos = {x = 0, y = 2},
-    targets = {"Consumable", "Consumables", "Consumeable", "Consumeables"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Consumable", "Consumables", "consumable", "consumables"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'planet',
     atlas = 'icons',
     pos = {x = 1, y = 2},
-    targets = {"Planet", "Planets"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Planet", "Planets", "planet", "planets"},
+            }
+        }
+    },
 }
 Icons.Icon{
     key = 'tarot',
     atlas = 'icons',
     pos = {x = 2, y = 2},
-    targets = {"Tarot", "Tarots"},
+    targets ={
+        ['en-us'] = {
+            {
+                values = {"Tarot", "Tarots", "tarot", "Tarots"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'spectral',
     atlas = 'icons',
-    pos = {x = 1, y = 2},
-    targets = {"Spectral", "Spectrals"},
+    pos = {x = 3, y = 2},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Spectral", "Spectrals"},
+            }
+        }
+    }
 }
 
 Icons.Icon{
     key = 'copy',
     atlas = 'icons',
     pos = {x = 0, y = 3},
-    targets = {},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Copy", "copy", "Copies", "copies"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'joker',
     atlas = 'icons',
     pos = {x = 1, y = 3},
-    targets = {"Joker", "Jokers"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Joker", "Jokers"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'mult',
     atlas = 'icons',
     pos = {x = 2, y = 3},
-    targets = {"Mult"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Mult", "mult"},
+                apply = function (comp, str)
+                    return comp == str
+                end
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'pack',
     atlas = 'icons',
     pos = {x = 3, y = 3},
-    targets = {"Booster"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Booster", "Boosters", "booster", "Boosters"},
+            }
+        }
+    }
 }
 
 Icons.Icon{
     key = 'tag',
     atlas = 'icons',
-    pos = {x = 2, y = 4},
-    targets = {"Tag", "Tags"},
+    pos = {x = 0, y = 4},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Tag", "Tags", "tag", "tags"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'blind',
     atlas = 'icons',
     pos = {x = 1, y = 4},
-    targets = {"Blind", "Blinds"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {"Blind", "Blinds", "blind", "blinds"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'retrigger',
     atlas = 'icons',
     pos = {x = 2, y = 4},
-    targets = {"Retrigger", "Retriggers", "retrigger"},
+    targets = 
+    {
+        ['en-us'] = {
+            {
+                values = {"Retrigger", "Retriggers", "retrigger", "retriggers"},
+            }
+        }
+    }
 }
 Icons.Icon{
     key = 'voucher',
     atlas = 'icons',
     pos = {x = 3, y = 4},
-    targets = {"Voucher", "Vouchers"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Voucher', 'Vouchers', 'voucher', 'vouchers'},
+            }
+        }
+    }
 }
 
 Icons.Icon{
     key = 'chpis',
     atlas = 'icons',
     pos = {x = 0, y = 5},
-    targets = {"Chips"},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Chip', 'Chips'},
+            }
+        }
+    }
 }
