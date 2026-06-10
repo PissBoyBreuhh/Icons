@@ -40,6 +40,7 @@ Icons.default_apply = {
         for i=1, #punctuations do
             if string.sub(comp,#comp,#comp) == string.sub(punctuations,i,i) then
                 comp = string.sub(comp,1,#comp-1)
+                break
             end
         end
         comp = string.lower(comp)
