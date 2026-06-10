@@ -267,3 +267,152 @@ Icons.Icon{
         }
     }
 }
+Icons.Icon{
+    key = 'deck',
+    atlas = 'icons',
+    pos = {x = 1, y = 5},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Deck', 'deck'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'discard',
+    atlas = 'icons',
+    pos = {x = 2, y = 5},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Discard', 'Discards', 'discard', 'discards'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'hand',
+    atlas = 'icons',
+    pos = {x = 3, y = 5},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Hands', 'Hand', 'hand', 'hands'},
+            }
+        }
+    }
+}
+
+-- HC suits
+
+Icons.Icon{
+    key = 'debuff',
+    atlas = 'icons',
+    pos = {x = 0, y = 7},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Debuff', 'Debuffs', 'debuff', 'debuffs'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'shop',
+    atlas = 'icons',
+    pos = {x = 1, y = 7},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Shop', 'shop'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'reroll',
+    atlas = 'icons',
+    pos = {x = 2, y = 7},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Reroll', 'reroll'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'unkown',
+    atlas = 'icons',
+    pos = {x = 3, y = 7},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {},
+            }
+        }
+    }
+}
+
+Icons.Icon{
+    key = 'boss',
+    atlas = 'icons',
+    pos = {x = 0, y = 8},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Boss', 'boss'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'chpis',
+    atlas = 'icons',
+    pos = {x = 1, y = 8},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'end of round'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'enhancement',
+    atlas = 'icons',
+    pos = {x = 2, y = 8},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Enhancement', 'Enhancements', 'enhancement', 'enhancements'},
+            }
+        }
+    }
+}
+Icons.Icon{
+    key = 'edition',
+    atlas = 'icons',
+    pos = {x = 3, y = 8},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Edition', 'Editions', 'edition', 'editions'},
+            }
+        }
+    }
+}
+
+Icons.Icon{
+    key = 'seal',
+    atlas = 'icons',
+    pos = {x = 0, y = 9},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {'Seal', 'Seals', 'seal', 'Seals'},
+            }
+        }
+    }
+}
