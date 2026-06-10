@@ -13,7 +13,7 @@ function loc_parse_string(...)
             lang = icon.targets[lang] and lang or 'en-us'
             for _, v in ipairs(icon.targets[lang]) do
                 for _, vv in ipairs(v.values) do
-                    if parsed_line[i] and parsed_line[i].strings[1] == vv then
+                    if parsed_line[i] and Icons.default_apply[lang](parsed_line[i].strings[1],vv) then
                         table.insert(parsed_line,i,{strings = {}, control = {element = tostring(G.Icons_temp_loc_acc)}})
                         i = i + 1
                         G.Icons_temp_loc_acc = G.Icons_temp_loc_acc + 1

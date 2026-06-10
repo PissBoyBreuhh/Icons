@@ -32,6 +32,12 @@ Icons.Icon = SMODS.GameObject:extend {
     end
 }
 
+Icons.default_apply = {
+    ['en-us'] = function (comp, str)
+        return comp == str
+    end
+}
+
 -- misc_functions.lua has localize(), init_localization(), loc_parse_string()
 -- game.lua has G.localization line 993
 
@@ -78,7 +84,7 @@ function Icons.get_icon_data(str)
         lang = icon.targets[lang] and lang or 'en-us'
         for _, v in ipairs(icon.targets[lang]) do
             for _, vv in ipairs(v.values) do
-                if (str == vv) then
+                if Icons.default_apply[lang](str,vv) then
                     return {
                         atlas = icon.atlas,
                         pos = icon.pos
