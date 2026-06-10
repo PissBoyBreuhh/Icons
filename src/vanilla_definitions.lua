@@ -13,7 +13,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Spade", "Spades"},
+                values = {'spades'},
             }
         }
     },
@@ -25,7 +25,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Heart", "Hearts"},
+                values = {'heart'},
             }
         }
     },
@@ -37,7 +37,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Club", "Clubs"},
+                values = {'club'},
             }
         }
     },
@@ -49,7 +49,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Diamond", "Diamonds"},
+                values = {'diamond'},
             }
         }
     },
@@ -62,7 +62,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Ace", "Aces"},
+                values = {'ace'},
             }
         }
     },
@@ -74,7 +74,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"King", "Kings"},
+                values = {'king'},
             }
         }
     },
@@ -86,7 +86,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Queen", "Queens"},
+                values = {'queen'},
             }
         }
     },
@@ -98,7 +98,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Jack", "Jacks"},
+                values = {'jack'},
             }
         }
     },
@@ -111,7 +111,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Consumable", "Consumables", "consumable", "consumables"},
+                values = {'jack'},
             }
         }
     },
@@ -123,7 +123,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Planet", "Planets", "planet", "planets"},
+                values = {'planet'},
             }
         }
     },
@@ -135,7 +135,7 @@ Icons.Icon{
     targets ={
         ['en-us'] = {
             {
-                values = {"Tarot", "Tarots", "tarot", "Tarots"},
+                values = {'tarot'},
             }
         }
     }
@@ -147,7 +147,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Spectral", "Spectrals"},
+                values = {'spectral'},
             }
         }
     }
@@ -160,7 +160,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Copy", "copy", "Copies", "copies"},
+                values = {'copy','copies'},
             }
         }
     }
@@ -172,7 +172,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Joker", "Jokers"},
+                values = {'joker'},
             }
         }
     }
@@ -184,10 +184,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Mult", "mult"},
-                apply = function (comp, str)
-                    return comp == str
-                end
+                values = {"mult"},
             }
         }
     }
@@ -199,7 +196,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Booster", "Boosters", "booster", "Boosters"},
+                values = {'booster'},
             }
         }
     }
@@ -212,7 +209,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Tag", "Tags", "tag", "tags"},
+                values = {'booster'},
             }
         }
     }
@@ -224,7 +221,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {"Blind", "Blinds", "blind", "blinds"},
+                values = {'blind'},
             }
         }
     }
@@ -237,7 +234,7 @@ Icons.Icon{
     {
         ['en-us'] = {
             {
-                values = {"Retrigger", "Retriggers", "retrigger", "retriggers"},
+                values = {'retrigger'},
             }
         }
     }
@@ -249,7 +246,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Voucher', 'Vouchers', 'voucher', 'vouchers'},
+                values = {'voucher'},
             }
         }
     }
@@ -262,7 +259,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Chip', 'Chips'},
+                values = {'chip'},
             }
         }
     }
@@ -274,7 +271,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Deck', 'deck'},
+                values = {'deck'},
             }
         }
     }
@@ -286,7 +283,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Discard', 'Discards', 'discard', 'discards'},
+                values = {'discards'},
             }
         }
     }
@@ -298,7 +295,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Hands', 'Hand', 'hand', 'hands'},
+                values = {'hand'},
             }
         }
     }
@@ -313,7 +310,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Debuff', 'Debuffs', 'debuff', 'debuffs'},
+                values = {'debuff'},
             }
         }
     }
@@ -325,7 +322,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Shop', 'shop'},
+                values = {'shop'},
             }
         }
     }
@@ -337,7 +334,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Reroll', 'reroll'},
+                values = {'reroll'},
             }
         }
     }
@@ -362,7 +359,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Boss', 'boss'},
+                values = {'boss','bosses'},
             }
         }
     }
@@ -386,7 +383,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Enhancement', 'Enhancements', 'enhancement', 'enhancements'},
+                values = {'enhancement'},
             }
         }
     }
@@ -398,7 +395,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Edition', 'Editions', 'edition', 'editions'},
+                values = {'edition'},
             }
         }
     }
@@ -411,7 +408,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'Seal', 'Seals', 'seal', 'Seals'},
+                values = {'seal'},
             }
         }
     }

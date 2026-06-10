@@ -33,8 +33,17 @@ Icons.Icon = SMODS.GameObject:extend {
 }
 
 Icons.default_apply = {
+    -- where str is the word itself
     ['en-us'] = function (comp, str)
-        return comp == str
+        if type(comp) ~= 'string' then return false end
+        local punctuations = ',.;:()[]{}/!?'
+        for i=1, #punctuations do
+            if string.sub(comp,#comp,#comp) == string.sub(punctuations,i,i) then
+                comp = string.sub(comp,1,#comp-1)
+            end
+        end
+        comp = string.lower(comp)
+        return comp == str or string.sub(comp,#comp,#comp) == 's' and string.sub(comp,1,#comp-1) == str
     end
 }
 
