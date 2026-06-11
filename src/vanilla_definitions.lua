@@ -161,6 +161,7 @@ Icons.Icon{
         ['en-us'] = {
             {
                 values = {'copy','copies'},
+                apply = Icons.default_apply.strict,
             }
         }
     }
@@ -209,7 +210,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'booster'},
+                values = {'tag'},
             }
         }
     }
@@ -383,7 +384,11 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'enhancement', 'enhance', 'enhanced'},
+                values = {'enhancement', 'enhance',},
+            },
+            {
+                values = {'enhanced'},
+                apply = Icons.default_apply.strict_no_case_sensitive
             }
         }
     }

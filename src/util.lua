@@ -1,4 +1,11 @@
 Icons.default_apply = {
+    strict = function (comp, str)
+        return comp == str
+    end,
+    strict_no_case_sensitive = function (comp, str)
+        if type(comp) ~= 'string' then return false end
+        return comp:lower() == str:lower()
+    end,
     -- where str is the word itself
     ['en-us'] = function (comp, str)
         if type(comp) ~= 'string' then return false end
@@ -89,7 +96,7 @@ function Icons.get_icon_data(str)
         lang = icon.targets[lang] and lang or 'en-us'
         for _, v in ipairs(icon.targets[lang]) do
             for _, vv in ipairs(v.values) do
-                if Icons.default_apply[lang](str,vv) then
+                if v.apply(str,vv) then
                     return {
                         atlas = icon.atlas,
                         pos = icon.pos
