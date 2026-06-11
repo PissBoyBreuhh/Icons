@@ -8,6 +8,6 @@
 	"main_file": "main.lua",
 	"priority": 100000,
 	"badge_colour": "6aa6a8",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"dependencies": ["Steamodded (>=1.0.0~BETA-1531zeebee)"]
 }
