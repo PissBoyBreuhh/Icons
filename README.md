@@ -10,6 +10,5 @@ Icons introduces small images that are placed next to text in descriptions of ca
   * `key`
 * **Optional Parameters** *(defaults)*:
   * `atlas = "Joker", pos = {x = 0, y = 0}`
-  * `targets = {self.key}`
-    * `targets` is what text it should search for when adding an icon
-    * Must be a table
+  * `targets = {['en-us'] = { {values = {}, apply = Icons.default_apply['en-us'] } }}`
+    * targets is a dictionary in which every is the key of a language. It contains an array of tables containing `values`, an array of strings to match and an `apply` function to apply icons.
