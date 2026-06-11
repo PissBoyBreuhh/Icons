@@ -1,37 +1,3 @@
-Icons.Icon = SMODS.GameObject:extend {
-    obj_table = Icons.Icons,
-    set = "Icons",
-    required_params = {
-        "key"
-    },
-
-    inject = function(self)
-        if not self.key then sendErrorMessage("Missing key!","ICONS") return end
-        self.atlas = self.atlas or 'Joker'
-        self.pos = self.pos or {x = 0, y = 0}
-        self.targets = {['en-us'] = { {values = {self.key}}}}
-        for _, v in pairs(self.targets) do
-            for _, vv in ipairs(v) do
-                vv.values = vv.values or {self.key}
-                vv.apply = vv.apply or function (comp, str)
-                    return comp == str
-                end
-                print(vv)
-            end
-        end
-
-        Icons.Icons[SMODS.current_mod.prefix..'_'..self.key] = {
-            key = SMODS.current_mod.prefix..'_'..self.key,
-            original_key = self.key,
-            atlas = self.atlas,
-            pos = self.pos,
-            targets = self.targets,
-            awoo = true
-        }
-        sendDebugMessage(("Icon %s has been registered"):format(self.key),"ICONS")
-    end
-}
-
 Icons.default_apply = {
     -- where str is the word itself
     ['en-us'] = function (comp, str)
@@ -46,6 +12,35 @@ Icons.default_apply = {
         comp = string.lower(comp)
         return comp == str or string.sub(comp,#comp,#comp) == 's' and string.sub(comp,1,#comp-1) == str
     end
+}
+
+Icons.Icon = SMODS.GameObject:extend {
+    obj_table = Icons.Icons,
+    set = "Icons",
+    required_params = {
+        "key"
+    },
+    atlas = 'Joker',
+    pos = {x = 0, y = 0},
+    targets = {
+        ['en-us'] = {
+            {
+                values = {},
+                apply = Icons.default_apply['en-us']
+            }
+        }
+    },
+    register = function (self)
+        if not self.key then sendErrorMessage("Missing key!","ICONS") return end
+        for k, v in pairs(self.targets) do
+            for _, vv in ipairs(v) do
+                vv.values = vv.values
+                vv.apply = Icons.default_apply[k]
+            end
+        end
+        Icons.Icons[self.key] = self
+        sendDebugMessage(("Icon %s has been registered"):format(self.key),"ICONS")
+    end,
 }
 
 -- misc_functions.lua has localize(), init_localization(), loc_parse_string()

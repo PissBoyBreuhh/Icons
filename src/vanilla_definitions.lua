@@ -111,7 +111,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'jack'},
+                values = {'consumable'},
             }
         }
     },
@@ -253,7 +253,7 @@ Icons.Icon{
 }
 
 Icons.Icon{
-    key = 'chpis',
+    key = 'chips',
     atlas = 'icons',
     pos = {x = 0, y = 5},
     targets = {
@@ -283,7 +283,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'discards'},
+                values = {'discard'},
             }
         }
     }
@@ -365,7 +365,7 @@ Icons.Icon{
     }
 }
 Icons.Icon{
-    key = 'chpis',
+    key = 'end_of_round',
     atlas = 'icons',
     pos = {x = 1, y = 8},
     targets = {
@@ -383,7 +383,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'enhancement'},
+                values = {'enhancement', 'enhance', 'enhanced'},
             }
         }
     }
