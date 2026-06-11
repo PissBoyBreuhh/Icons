@@ -93,3 +93,48 @@ match_indent = false
 payload = '''
     G.Icons_temp_loc_acc = nil
 '''
+
+# weird blind thing
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''local _reward = true'''
+position = 'before'
+match_indent = false
+payload = '''
+    local target = target or {vars = {}}
+    target.vars = target.vars or {}
+    target.vars.elements = target.vars.elements or {}
+    for _,v in ipairs(Icons.get_needed_icons(target)) do
+            table.insert(
+            target.vars.elements,
+            { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                { n=G.UIT.O, config= { object =
+                    SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+                } }
+            } }
+        )
+    end
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''if discovered then'''
+position = 'before'
+match_indent = false
+payload = '''
+    local target = target or {vars = {}}
+    target.vars = target.vars or {}
+    target.vars.elements = target.vars.elements or {}
+    for _,v in ipairs(Icons.get_needed_icons(target)) do
+            table.insert(
+            target.vars.elements,
+            { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                { n=G.UIT.O, config= { object =
+                    SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+                } }
+            } }
+        )
+    end
+'''

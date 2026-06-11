@@ -13,7 +13,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'spades'},
+                values = {'spade'},
             }
         }
     },
