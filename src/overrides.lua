@@ -132,7 +132,7 @@ function init_localization(...)
                                             if type(part.strings[1]) == 'string' and part.strings[1]:sub(1,1) == ' ' then
                                                 part.strings[1] = part.strings[1]:sub(2,#part.strings[1])
                                                 table.insert(center.text_parsed[target.address.line],
-                                                target.address.segment + target_offset - 1,
+                                                target.address.segment + target_offset,
                                                 {strings = {' '}, control = part.control})
                                                 target_offset = target_offset + 1
                                             end
@@ -148,7 +148,7 @@ function init_localization(...)
                         else
                         end
                         prev_line = target.line
-                    end                    
+                    end
                 end
             end
         end
