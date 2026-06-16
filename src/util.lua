@@ -69,11 +69,12 @@ function Icons.get_needed_icons(args)
     args.set = args.set or 'Other'
     if not args or not args.set or not args.key then return {} end
     if not G.localization.descriptions[args.set][args.key] then return {} end
+    if not G.localization.descriptions[args.set][args.key].icon_text_data then return {} end
     local c = {}
-    for _,line in ipairs(G.localization.descriptions[args.set][args.key].text_parsed) do
-        for i=1,#line do
-            if line[i].control and line[i].control.element and line[i+1] then
-                table.insert(c,Icons.get_icon_data(line[i+1].strings[1]))
+    if not G.localization.descriptions[args.set][args.key].icon_text_data.multi_box then
+        for _,part in ipairs(G.localization.descriptions[args.set][args.key].icon_text_data or {}) do
+            if not Icons.get_icon_data(part.string).err then
+                table.insert(c,Icons.get_icon_data(part.string))
             end
         end
     end
@@ -107,6 +108,7 @@ function Icons.get_icon_data(str)
     end
     return {
         atlas = 'Joker',
-        pos = {x = 0, y = 0}
+        pos = {x = 0, y = 0},
+        err = true
     }
 end

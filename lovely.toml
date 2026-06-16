@@ -3,56 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = -999999999
 
-# parse_string prep
-[[patches]]
-[patches.pattern]
-target = 'functions/misc_functions.lua'
-pattern = '''
-      local str_parts, str_it = {}, 1
-'''
-position = 'after'
-match_indent = false
-payload = '''
-    local function save_string(override)
-        if override or str_parts[1] and str_parts[1] ~= ' ' then
-            parsed_line[#parsed_line+1] = {strings = str_parts, control = copy_table(control) or {}}
-        end
-        str_parts, str_it = {}, 1
-    end
-'''
-
-# line separator
-[[patches]]
-[patches.pattern]
-target = 'functions/misc_functions.lua'
-pattern = '''
-      elseif not _c and char ~= '#' and not _s_gather then str_parts[str_it] = (str_parts[str_it] or '')..(control['X'] and char:gsub("%s+", "") or char)
-'''
-position = 'before'
-match_indent = false
-payload = '''
-    elseif not _c and char == ' ' then
-    save_string(false)
-    local old_bg = control['X']
-    control['X'] = nil
-    str_parts = {' '}
-    save_string(true)
-    control['X'] = old_bg
-'''
-
-# force function
-[[patches]]
-[patches.pattern]
-target = 'functions/misc_functions.lua'
-pattern = '''
-if str_parts[1] then parsed_line[#parsed_line+1] = {strings = str_parts, control = control or {}} end
-'''
-position = 'at'
-match_indent = false
-payload = '''
-    if str_parts[1] then save_string(false) end
-'''
-
 # loc acc
 # desc
 [[patches]]

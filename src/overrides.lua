@@ -1,4 +1,4 @@
-local ref = loc_parse_string
+--[[local ref = loc_parse_string
 function loc_parse_string(...)
     local parsed_line = ref(...) or {}
     if not G.Icons_temp_loc_process then return parsed_line end
@@ -24,13 +24,135 @@ function loc_parse_string(...)
         i = i + 1
     end
     return parsed_line
-end
+end]]
 
 local ref = init_localization
 function init_localization(...)
     local ret = ref(...)
     G.Icons_temp_loc_acc = nil
     G.Icons_temp_loc_skip = nil
+
+    local function handle_string (ref,target,i,ii,iii,wc)
+        wc = wc or 0 -- word count
+        local word = ''
+        local function store_data()
+            if word:sub(1,1) == ' ' then word = word:sub(2,#word) end
+            wc = wc + 1
+            table.insert(ref,{
+                string = word,
+                address = {
+                    box = iii ~= nil and i or false,
+                    line = iii ~= nil and ii or i,
+                    segment = iii ~= nil and iii or ii,
+                    word = wc
+                },
+            })
+            word = ''
+        end
+        local function check_string(str)
+            for j = 1, #str do
+                local l_char = str:sub(j-1,j-1)
+                local char = str:sub(j,j)
+                local r_char = str:sub(j+1,j+1)
+                if char == ' ' and l_char and l_char ~= ' ' then
+                    if #word > 0 then
+                        store_data()
+                    end
+                else
+                    word = word..char
+                end
+                
+            end
+            if #word > 0 then
+                store_data()
+            end
+        end
+        if target.strings and type(target.strings[1]) == 'string' then
+            check_string(target.strings[1])
+        else
+            if type(target) == 'table' then
+                if target.strings then
+                    handle_string(ref,target.strings,i,ii,iii,wc)
+                    wc = wc + 1
+                end
+                for j in ipairs(target) do
+                    handle_string(ref,target[j],i,ii,iii,wc)
+                    wc = wc + 1
+                end
+            else
+
+                check_string(target)
+            end
+        end
+    end
+
+    for g_k, group in pairs(G.localization) do
+        if g_k == 'descriptions' then
+            for _, set in pairs(group) do
+                for _, center in pairs(set) do
+                    center.icon_text_data = {}
+                    print(center.name)
+                    if center.text_parsed and center.text_parsed[1] and center.text_parsed[1][1] and center.text_parsed[1][1].strings then center.icon_text_data.multi_box = false else center.icon_text_data.multi_box = true end
+                    for i,line in ipairs(center.text_parsed) do
+                        for ii,segment in ipairs(line) do
+                            if segment.strings then -- single box
+                                handle_string(center.icon_text_data,segment,i,ii,nil)
+                            else -- multi_box
+                                for iii, mb_segment in ipairs(segment) do
+                                    handle_string(center.icon_text_data,mb_segment,i,ii,iii)
+                                end
+                            end
+                        end
+                    end
+
+                    local icons_count = 1
+                    for _,line in ipairs(center.text_parsed) do
+                        for _,segment in ipairs(line) do
+                            if not center.icon_text_data.multi_box then
+                                if segment.control.element then icons_count = icons_count + 1 end
+                            else
+                                for _,mb_segment in ipairs(segment) do
+                                    if mb_segment.control.element then icons_count = icons_count + 1 end
+                                end
+                            end
+                        end
+                    end
+                    local target_offset, prev_line = 0, 0
+                    local segment_offset, prev_segment = 0, 0 -- prep work for multi words
+                    for _, target in ipairs(center.icon_text_data) do
+                        if prev_line ~= target.address.line then target_offset = 0 end
+                        if not center.icon_text_data.multi_box then
+                            for _, icon in pairs(Icons.Icons) do
+                                local lang = G.SETTINGS.language
+                                lang = icon.targets[lang] and lang or 'en-us'
+                                for _, v in ipairs(icon.targets[lang]) do
+                                    for _, vv in ipairs(v.values) do
+                                        if v.apply(target.string,vv) then
+                                            local part = center.text_parsed[target.address.line][target.address.segment + target_offset]
+                                            if type(part.strings[1]) == 'string' and part.strings[1]:sub(1,1) == ' ' then
+                                                part.strings[1] = part.strings[1]:sub(2,#part.strings[1])
+                                                table.insert(center.text_parsed[target.address.line],
+                                                target.address.segment + target_offset - 1,
+                                                {strings = {' '}, control = part.control})
+                                                target_offset = target_offset + 1
+                                            end
+                                            table.insert(center.text_parsed[target.address.line],
+                                            target.address.segment + target_offset,
+                                            {strings = {}, control = {element = icons_count}})
+                                            icons_count = icons_count + 1
+                                            target_offset = target_offset + 1
+                                        end
+                                    end
+                                end
+                            end
+                        else
+                        end
+                        prev_line = target.line
+                    end                    
+                end
+            end
+        end
+    end
     return ret
 end
 
