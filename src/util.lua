@@ -73,7 +73,7 @@ function Icons.get_needed_icons(args)
     local c = {}
     if not G.localization.descriptions[args.set][args.key].icon_text_data.multi_box then
         for _,part in ipairs(G.localization.descriptions[args.set][args.key].icon_text_data or {}) do
-            if not Icons.get_icon_data(part.string).err then
+            if Icons.get_icon_data(part.string) then
                 table.insert(c,Icons.get_icon_data(part.string))
             end
         end
@@ -106,9 +106,5 @@ function Icons.get_icon_data(str)
             end
         end
     end
-    return {
-        atlas = 'Joker',
-        pos = {x = 0, y = 0},
-        err = true
-    }
+    return nil
 end
