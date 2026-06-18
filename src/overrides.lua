@@ -142,13 +142,13 @@ function init_localization(...)
                     local target_offset, prev_line = 0, 0
                     for i, target in ipairs(center.icon_text_data) do
                         if prev_line ~= target.address.line then target_offset = 0 end
-                        if not center.icon_text_data.multi_box then
-                            for _, icon in pairs(Icons.Icons) do
-                                local lang = G.SETTINGS.language
-                                lang = icon.targets[lang] and lang or 'en-us'
-                                for _, v in ipairs(icon.targets[lang]) do
-                                    for _, vv in ipairs(v.values) do
-                                        if v.apply(target.string,vv) then
+                        for _, icon in pairs(Icons.Icons) do
+                            local lang = G.SETTINGS.language
+                            lang = icon.targets[lang] and lang or 'en-us'
+                            for _, v in ipairs(icon.targets[lang]) do
+                                for _, vv in ipairs(v.values) do
+                                    if v.apply(target.string,vv) then
+                                        if not center.icon_text_data.multi_box then
                                             local part = center.text_parsed[target.address.line][target.address.segment + target_offset]
                                             if type(part.strings[1]) == 'string' then
                                                 -- SPACE HANDLING
@@ -178,12 +178,39 @@ function init_localization(...)
                                             icons_count = icons_count + 1
                                             target_offset = target_offset + 1
                                             --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                        else
+                                            local part = center.text_parsed[target.address.box][target.address.line][target.address.segment + target_offset]
+                                            if type(part.strings[1]) == 'string' then
+                                                -- SPACE HANDLING
+                                                if part.strings[1]:sub(1,1) == ' ' then
+                                                    part.strings[1] = part.strings[1]:sub(2,#part.strings[1])
+                                                    table.insert(center.text_parsed[target.address.box][target.address.line],
+                                                    target.address.segment + target_offset,
+                                                    {strings = {' '}, control = part.control})
+                                                    target_offset = target_offset + 1
+                                                    --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                                end
+                                                -- Separate strings
+                                                if #part.strings[1]:sub(1,target.address.w_start) > 0 then
+                                                    table.insert(center.text_parsed[target.address.box][target.address.line],
+                                                    target.address.segment + target_offset,
+                                                    {strings = {part.strings[1]:sub(1,target.address.w_start)}, control = part.control})
+                                                    part.strings[1] = part.strings[1]:sub(target.address.w_start+1,#part.strings[1])
+                                                    target_offset = target_offset + 1
+                                                    shift_word_start(center.icon_text_data, target.address.line, i, -target.address.w_start)
+                                                    --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                                end
+                                            end
+                                            
+                                            table.insert(center.text_parsed[target.address.box][target.address.line],
+                                            target.address.segment + target_offset,
+                                            {strings = {}, control = {element = icons_count}})
+                                            icons_count = icons_count + 1
+                                            target_offset = target_offset + 1
                                         end
                                     end
                                 end
                             end
-                        else
-                            
                         end
                         prev_line = target.address.line
                     end
