@@ -35,8 +35,9 @@ function init_localization(...)
     local function handle_string (ref,target,i,ii,iii,wc)
         wc = wc or 0 -- word count
         local word = ''
-        local function store_data()
-            if word:sub(1,1) == ' ' then word = word:sub(2,#word) end
+        local prev_end = 0
+        local function store_data(len)
+            --if word:sub(1,1) == ' ' then word = word:sub(2,#word); spaces_sum = spaces_sum + 1 end
             wc = wc + 1
             table.insert(ref,{
                 string = word,
@@ -44,10 +45,14 @@ function init_localization(...)
                     box = iii ~= nil and i or false,
                     line = iii ~= nil and ii or i,
                     segment = iii ~= nil and iii or ii,
-                    word = wc
+                    word = wc,
+                    w_start = prev_end,
+                    w_end = prev_end + len,
+                    w_len = len,
                 },
             })
             word = ''
+            prev_end = prev_end + len
         end
         local function check_string(str)
             for j = 1, #str do
@@ -56,7 +61,8 @@ function init_localization(...)
                 local r_char = str:sub(j+1,j+1)
                 if char == ' ' and l_char and l_char ~= ' ' then
                     if #word > 0 then
-                        store_data()
+                        store_data(#word)
+                        prev_end = prev_end + 1
                     end
                 else
                     word = word..char
@@ -64,7 +70,7 @@ function init_localization(...)
                 
             end
             if #word > 0 then
-                store_data()
+                store_data(#word)
             end
         end
         if target.strings and type(target.strings[1]) == 'string' then
@@ -89,9 +95,8 @@ function init_localization(...)
     for g_k, group in pairs(G.localization) do
         if g_k == 'descriptions' then
             for _, set in pairs(group) do
-                for _, center in pairs(set) do
+                for _k, center in pairs(set) do
                     center.icon_text_data = {}
-                    print(center.name)
                     if center.text_parsed and center.text_parsed[1] and center.text_parsed[1][1] and center.text_parsed[1][1].strings then center.icon_text_data.multi_box = false else center.icon_text_data.multi_box = true end
                     for i,line in ipairs(center.text_parsed) do
                         for ii,segment in ipairs(line) do
@@ -106,6 +111,7 @@ function init_localization(...)
                     end
 
                     local icons_count = 1
+                    -- pre_paced elements handler
                     for _,line in ipairs(center.text_parsed) do
                         for _,segment in ipairs(line) do
                             if not center.icon_text_data.multi_box then
@@ -117,9 +123,24 @@ function init_localization(...)
                             end
                         end
                     end
+
+                    local function shift_word_segment(tbl,line,index,mod)
+                        for i, v in ipairs(tbl) do
+                            if i > index and v.address.line == line then
+                                v.address.segment = v.address.segment + mod
+                            end
+                        end
+                    end
+                    local function shift_word_start(tbl,line,index,mod)
+                        for i, v in ipairs(tbl) do
+                            if i > index and v.address.line == line then
+                                v.address.w_start = v.address.w_start + mod
+                            end
+                        end
+                    end
+
                     local target_offset, prev_line = 0, 0
-                    local segment_offset, prev_segment = 0, 0 -- prep work for multi words
-                    for _, target in ipairs(center.icon_text_data) do
+                    for i, target in ipairs(center.icon_text_data) do
                         if prev_line ~= target.address.line then target_offset = 0 end
                         if not center.icon_text_data.multi_box then
                             for _, icon in pairs(Icons.Icons) do
@@ -129,25 +150,42 @@ function init_localization(...)
                                     for _, vv in ipairs(v.values) do
                                         if v.apply(target.string,vv) then
                                             local part = center.text_parsed[target.address.line][target.address.segment + target_offset]
-                                            if type(part.strings[1]) == 'string' and part.strings[1]:sub(1,1) == ' ' then
-                                                part.strings[1] = part.strings[1]:sub(2,#part.strings[1])
-                                                table.insert(center.text_parsed[target.address.line],
-                                                target.address.segment + target_offset,
-                                                {strings = {' '}, control = part.control})
-                                                target_offset = target_offset + 1
+                                            if type(part.strings[1]) == 'string' then
+                                                -- SPACE HANDLING
+                                                if part.strings[1]:sub(1,1) == ' ' then
+                                                    part.strings[1] = part.strings[1]:sub(2,#part.strings[1])
+                                                    table.insert(center.text_parsed[target.address.line],
+                                                    target.address.segment + target_offset,
+                                                    {strings = {' '}, control = part.control})
+                                                    target_offset = target_offset + 1
+                                                    --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                                end
+                                                -- Separate strings
+                                                if #part.strings[1]:sub(1,target.address.w_start) > 0 then
+                                                    table.insert(center.text_parsed[target.address.line],
+                                                    target.address.segment + target_offset,
+                                                    {strings = {part.strings[1]:sub(1,target.address.w_start)}, control = part.control})
+                                                    part.strings[1] = part.strings[1]:sub(target.address.w_start+1,#part.strings[1])
+                                                    target_offset = target_offset + 1
+                                                    shift_word_start(center.icon_text_data, target.address.line, i, -target.address.w_start)
+                                                    --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                                end
                                             end
+                                            
                                             table.insert(center.text_parsed[target.address.line],
                                             target.address.segment + target_offset,
                                             {strings = {}, control = {element = icons_count}})
                                             icons_count = icons_count + 1
                                             target_offset = target_offset + 1
+                                            --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
                                         end
                                     end
                                 end
                             end
                         else
+                            
                         end
-                        prev_line = target.line
+                        prev_line = target.address.line
                     end
                 end
             end

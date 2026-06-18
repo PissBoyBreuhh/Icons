@@ -71,11 +71,9 @@ function Icons.get_needed_icons(args)
     if not G.localization.descriptions[args.set][args.key] then return {} end
     if not G.localization.descriptions[args.set][args.key].icon_text_data then return {} end
     local c = {}
-    if not G.localization.descriptions[args.set][args.key].icon_text_data.multi_box then
-        for _,part in ipairs(G.localization.descriptions[args.set][args.key].icon_text_data or {}) do
-            if Icons.get_icon_data(part.string) then
-                table.insert(c,Icons.get_icon_data(part.string))
-            end
+    for _,part in ipairs(G.localization.descriptions[args.set][args.key].icon_text_data or {}) do
+        if Icons.get_icon_data(part.string) then
+            table.insert(c,Icons.get_icon_data(part.string))
         end
     end
     return c

@@ -39,11 +39,12 @@ Icons.testjk = SMODS.Joker{
         text = {
             {
                 "{C:green} Mult #1# {element:1}jimbo",
-                "Chips Mult"
+                "Chips spectral"
             },
             {
                 "second",
-                "box!"
+                "box! mult",
+                "deck"
             }
         }
     }
