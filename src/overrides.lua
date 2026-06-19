@@ -223,7 +223,7 @@ end
 
 local ref = localize
 function localize(args,misc_cat,...)
-    if args and type(args) == 'table' and args.type == 'descriptions' then
+    if args and type(args) == 'table' and (args.type == 'descriptions' or args.type == 'other') then
         args.vars = args.vars or {}
         args.vars.elements = args.vars.elements or {}
         for _,v in ipairs(Icons.get_needed_icons(args)) do
