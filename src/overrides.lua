@@ -223,7 +223,7 @@ end
 
 local ref = localize
 function localize(args,misc_cat,...)
-    if args and type(args) == 'table' then
+    if args and type(args) == 'table' and args.type == 'descriptions' then
         args.vars = args.vars or {}
         args.vars.elements = args.vars.elements or {}
         for _,v in ipairs(Icons.get_needed_icons(args)) do
@@ -236,20 +236,8 @@ function localize(args,misc_cat,...)
                 } }
             )
         end
-        if false then
-        -- temporary failsafe
-        for i = 1, 20 do
-            table.insert(
-                args.vars.elements,
-                { n=G.UIT.C, config = { align="cm" }, nodes = { 
-                    { n=G.UIT.O, config= { object =
-                        SMODS.create_sprite(0, 0, 0.3, 0.3, 'ico_icons', {x = 0, y = 0})
-                    } }
-                } }
-            )
-        end
-        end
     end
+    --if args and args.vars and args.vars.elements then print(args.vars.elements) end
     local ret = ref(args,misc_cat,...)
     return ret
 end
