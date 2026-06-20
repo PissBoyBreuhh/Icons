@@ -147,7 +147,14 @@ function init_localization(...)
                             lang = icon.targets[lang] and lang or 'en-us'
                             for _, v in ipairs(icon.targets[lang]) do
                                 for _, vv in ipairs(v.values) do
-                                    if v.apply(target.string,vv) then
+                                    local _, count = string.gsub(vv, " ", "")
+                                    local comp = target.string
+                                    for p = 1, count do
+                                        if center.icon_text_data[i+p] and center.icon_text_data[i+p].string then
+                                            comp = comp .. " " .. center.icon_text_data[i+p].string
+                                        end
+                                    end
+                                    if v.apply(comp,vv) then
                                         if not center.icon_text_data.multi_box then
                                             local part = center.text_parsed[target.address.line][target.address.segment + target_offset]
                                             if type(part.strings[1]) == 'string' then
