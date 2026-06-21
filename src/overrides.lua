@@ -126,7 +126,7 @@ function init_localization(...)
 
                     local function shift_word_segment(tbl,line,index,mod)
                         for i, v in ipairs(tbl) do
-                            if i > index and v.address.line == line then
+                            if i >= index and v.address.line == line then
                                 v.address.segment = v.address.segment + mod
                             end
                         end
@@ -148,15 +148,15 @@ function init_localization(...)
                             part = center.text_parsed[target.address.box][target.address.line]
                         end
                         local segment = part[target.address.segment + target_offset]
-                        if type(segment.strings[1]) == 'string' then
+                        if segment and type(segment.strings[1]) == 'string' then
                             -- SPACE HANDLING
                             if segment.strings[1]:sub(1,1) == ' ' then
                                 segment.strings[1] = segment.strings[1]:sub(2,#segment.strings[1])
                                 table.insert(part,
                                 target.address.segment + target_offset,
                                 {strings = {' '}, control = segment.control})
-                                target_offset = target_offset + 1
-                                --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                --target_offset = target_offset + 1
+                                shift_word_segment(center.icon_text_data, target.address.line, index, 1)
                             end
                             -- Separate strings
                             if #segment.strings[1]:sub(1,target.address.w_start) > 0 then
@@ -164,9 +164,9 @@ function init_localization(...)
                                 target.address.segment + target_offset,
                                 {strings = {segment.strings[1]:sub(1,target.address.w_start)}, control = segment.control})
                                 segment.strings[1] = segment.strings[1]:sub(target.address.w_start+1,#segment.strings[1])
-                                target_offset = target_offset + 1
+                                --target_offset = target_offset + 1
                                 shift_word_start(center.icon_text_data, target.address.line, index, -target.address.w_start)
-                                --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                                shift_word_segment(center.icon_text_data, target.address.line, index, 1)
                             end
                         end
                         -- insert icon
@@ -174,20 +174,24 @@ function init_localization(...)
                         target.address.segment + target_offset,
                         {strings = {}, control = {element = icons_count}})
                         icons_count = icons_count + 1
-                        target_offset = target_offset + 1
-                        --shift_word_segment(center.icon_text_data, target.address.line, i, 1)
+                        --target_offset = target_offset + 1
+                        shift_word_segment(center.icon_text_data, target.address.line, index, 1)
                     end
-                    for i, target in ipairs(center.icon_text_data) do
+
+                    local i = 1
+                    while i <= #center.icon_text_data do
+                        local target = center.icon_text_data[i]
                         if prev_line ~= target.address.line then target_offset = 0 end
+                        local count = 0
                         for _, icon in pairs(Icons.Icons) do
                             local lang = G.SETTINGS.language
                             lang = icon.targets[lang] and lang or 'en-us'
                             for _, v in ipairs(icon.targets[lang]) do
                                 for _, vv in ipairs(v.values) do
-                                    local _, count = string.gsub(vv, " ", "")
+                                    local _, count = string.gsub(vv, "%S+", "")
                                     local comp = target.string
                                     for p = 1, count do
-                                        if center.icon_text_data[i+p] and center.icon_text_data[i+p].string then
+                                        if center.icon_text_data[i+p] then
                                             comp = comp .. " " .. center.icon_text_data[i+p].string
                                         end
                                     end
@@ -197,6 +201,7 @@ function init_localization(...)
                                 end
                             end
                         end
+                        i = i + 1 + count
                         prev_line = target.address.line
                     end
                 end
