@@ -67,7 +67,7 @@ function init_localization(...)
                 else
                     word = word..char
                 end
-                
+
             end
             if #word > 0 then
                 store_data(#word)
@@ -140,7 +140,8 @@ function init_localization(...)
                     end
                     local target_offset, prev_line = 0, 0
 
-                    local function inject(index, target)
+                    local function inject(index)
+                        local target = center.icon_text_data[index]
                         local part
                         if not center.icon_text_data.multi_box then
                             part = center.text_parsed[target.address.line]
@@ -182,28 +183,37 @@ function init_localization(...)
                     while i <= #center.icon_text_data do
                         local target = center.icon_text_data[i]
                         if prev_line ~= target.address.line then target_offset = 0 end
+                        local finish = false
                         local count = 0
                         for _, icon in pairs(Icons.Icons) do
                             local lang = G.SETTINGS.language
                             lang = icon.targets[lang] and lang or 'en-us'
                             for _, v in ipairs(icon.targets[lang]) do
-                                for _, vv in ipairs(v.values) do
-                                    local _, count = string.gsub(vv, "%S+", "")
-                                    local comp = target.string
-                                    for p = 1, count do
-                                        if center.icon_text_data[i+p] then
-                                            comp = comp .. " " .. center.icon_text_data[i+p].string
+                                    for _, vv in ipairs(v.values) do
+                                        _, count = string.gsub(vv, "%S+", "")
+                                        local comp = target.string
+                                        count = count - 1
+                                        for p = 1, count do
+                                            if center.icon_text_data[i + p] then
+                                                comp = comp .. " " .. center.icon_text_data[i + p].string
+                                            end
                                         end
+                                        if v.apply(comp, vv) then
+                                            sendDebugMessage(("Added %s at %d + count %d (word: %s)"):format(
+                                            target.string, i, count, comp))
+                                            inject(i)
+                                            finish = true
+                                            break
+                                        end
+                                        if finish then break end
                                     end
-                                    if v.apply(target.string,vv) then
-                                        inject(i, target)
-                                    end
-                                end
+                                if finish then break end
                             end
+                            if finish then break end
                         end
                         i = i + 1 + count
                         prev_line = target.address.line
-                    end
+                    end -- temp
                 end
             end
         end
@@ -219,7 +229,7 @@ function localize(args,misc_cat,...)
         for _,v in ipairs(Icons.get_needed_icons(args)) do
                 table.insert(
                 args.vars.elements,
-                { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                { n=G.UIT.C, config = { align="cm" }, nodes = {
                     { n=G.UIT.O, config= { object =
                         SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
                     } }

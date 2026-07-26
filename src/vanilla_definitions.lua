@@ -231,7 +231,7 @@ Icons.Icon{
     key = 'retrigger',
     atlas = 'icons',
     pos = {x = 2, y = 4},
-    targets = 
+    targets =
     {
         ['en-us'] = {
             {
@@ -360,7 +360,7 @@ Icons.Icon{
     targets = {
         ['en-us'] = {
             {
-                values = {'boss','bosses'},
+                values = {'boss blind','bosses'},
             }
         }
     }
