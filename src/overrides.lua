@@ -189,24 +189,22 @@ function init_localization(...)
                             local lang = G.SETTINGS.language
                             lang = icon.targets[lang] and lang or 'en-us'
                             for _, v in ipairs(icon.targets[lang]) do
-                                    for _, vv in ipairs(v.values) do
-                                        _, count = string.gsub(vv, "%S+", "")
-                                        local comp = target.string
-                                        count = count - 1
-                                        for p = 1, count do
-                                            if center.icon_text_data[i + p] then
-                                                comp = comp .. " " .. center.icon_text_data[i + p].string
-                                            end
+                                for _, vv in ipairs(v.values) do
+                                    _, count = string.gsub(vv, "%S+", "")
+                                    local comp = target.string
+                                    count = count - 1
+                                    for p = 1, count do
+                                        if center.icon_text_data[i + p] then
+                                            comp = comp .. " " .. center.icon_text_data[i + p].string
                                         end
-                                        if v.apply(comp, vv) then
-                                            sendDebugMessage(("Added %s at %d + count %d (word: %s)"):format(
-                                            target.string, i, count, comp))
-                                            inject(i)
-                                            finish = true
-                                            break
-                                        end
-                                        if finish then break end
                                     end
+                                    if v.apply(comp, vv) then
+                                        inject(i)
+                                        finish = true
+                                        break
+                                    end
+                                    if finish then break end
+                                end
                                 if finish then break end
                             end
                             if finish then break end

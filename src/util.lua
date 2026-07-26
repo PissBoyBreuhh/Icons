@@ -38,7 +38,7 @@ Icons.Icon = SMODS.GameObject:extend {
         }
     },
     register = function (self)
-        if not self.key then sendErrorMessage("Missing key!","ICONS") return end
+        if not self.key then sendErrorMessage("Missing key! Icon has not been registered","ICONS") return end
         for k, v in pairs(self.targets) do
             for _, vv in ipairs(v) do
                 vv.values = vv.values
